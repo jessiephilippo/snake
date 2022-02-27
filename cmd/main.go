@@ -66,6 +66,7 @@ func main() {
 
 	screen.HideCursor()
 	for !isGameOver {
+		printScore()
 		// Read the user input
 		readUserInput()
 
@@ -344,4 +345,13 @@ func getFrame() (int, int) {
 func printFilledRectInGameFrame(row, col, widht, height int, ch rune, style tcell.Style) {
 	r, c := getFrame()
 	printFilledRect(row+r, col+c, widht, height, ch, style)
+}
+
+func printScore() {
+	screenWidth, screenHeight := getFrame()
+	for _, c := range fmt.Sprintf("Current score: %d", score) {
+		screen.SetContent(screenHeight, screenWidth-2, c, nil, tcell.StyleDefault.Background(tcell.ColorBlack).Foreground(tcell.ColorWhite))
+		screenHeight += 1
+	}
+	screen.Show()
 }
